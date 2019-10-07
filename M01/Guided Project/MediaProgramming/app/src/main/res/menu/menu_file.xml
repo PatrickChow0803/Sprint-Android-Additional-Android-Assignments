@@ -6,7 +6,7 @@
     <item
         android:id="@+id/menu_red"
         android:orderInCategory="1"
-        app:showAsAction="never"
+        app:showAsAction="ifRoom"
         android:title="Switch Player"/>
 
 </menu>

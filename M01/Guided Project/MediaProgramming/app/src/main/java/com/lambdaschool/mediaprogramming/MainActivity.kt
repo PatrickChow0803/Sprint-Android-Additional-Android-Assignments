@@ -83,14 +83,22 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
 
         //TODO 4: Set the video URI to the videoview (This video is an mp4 file in the raw folder )
+        video_view.setVideoURI(Uri.parse("android.resource://" + packageName + "/" + R.raw.live_views_of_starman))
 
         //TODO 5: Set an onPreparedListener to the videoview and enable the play/pause button in the
         //TODO callback
+        video_view.setOnPreparedListener{mp ->
+            play_pause_button.isEnabled = true
+            mp?.let {
+                video_seek_bar.max = mp.duration
+            }
+        }
     }
 
     //TODO 8: Pause the video when onStop is called, if user navigates away from the screen
     override fun onStop() {
         super.onStop()
+        video_view.pause()
     }
 
     //TODO 7: Notice that we create an overflow menu to handle navigation between activities
