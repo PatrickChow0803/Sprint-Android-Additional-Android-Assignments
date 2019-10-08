@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -118,8 +119,15 @@ class ItemDetailFragment : Fragment(), OnMapReadyCallback {
         val location = WORLD_LOCS.random()
         val latLong = LatLng(lat, long)
         // TODO: S09M02-9 use location data to move the camera and place a pin
-        googleMap.addMarker(MarkerOptions().position(location).title("Marker in $city"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(location))
+        val hand = Handler()
+
+        hand.postDelayed(object: Runnable{
+            override fun run() {
+                googleMap.addMarker(MarkerOptions().position(location).title("Marker in $city"))
+                googleMap.moveCamera(CameraUpdateFactory.newLatLng(location))
+            }
+        }, 2000)
+
     }
 
     private fun getCurrentLocation() {
