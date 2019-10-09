@@ -18,6 +18,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import java.util.*
+import kotlin.Comparator
 
 /**
  * An activity representing a list of Items. This activity
@@ -158,6 +159,36 @@ class ItemListActivity : AppCompatActivity() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.sort_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+        when(item?.itemId){
+            R.id.menu_sort ->{
+                swApiObjects?.let{
+                    it.sortWith(object: Comparator<SwApiObject>{
+                        override fun compare(o1: SwApiObject?, o2: SwApiObject?): Int {
+                            return if(o1 == null || o2 == null){
+                                0
+                            } else {
+                                SwApiObject.compareName(o1, o2)
+                            }
+                        }
+
+                    })
+                    viewAdapter?.notifyDataSetChanged()
+                }
+            }
+
+            R.id.menu_show_toast -> {
+                Toast.makeText(this, "This is a toast", Toast.LENGTH_SHORT).show()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
     /**
      * Initialize the contents of the Activity's standard options menu.  You
      * should place your menu items in to <var>menu</var>.
