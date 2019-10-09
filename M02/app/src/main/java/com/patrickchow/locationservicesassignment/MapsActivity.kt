@@ -47,6 +47,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
 
+        // YOU COULD uncomment this to have the map automatically go to the current location
+        //requestPermission()
 
         // Move to current location. Needs location permission though.
         btn_position.setOnClickListener {
