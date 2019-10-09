@@ -14,6 +14,11 @@ Build an app which allows users to place tags on a map and track their current l
 This app will consist of a map acitvity with your own buttons that will center the map on the user's 
 current location and place a map marker on the centered location.
 
+debug{
+	buildConfigField 'String', "ApiKey", MY_API_KEY
+	resValue 'String', "ApiKey", MY_API_KEY
+}
+
 ## Outline
 1. Create a project with a maps activity
 2. Add a maps api key
