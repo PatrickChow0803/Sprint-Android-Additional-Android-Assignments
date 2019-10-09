@@ -4,4 +4,8 @@
         android:title="Sort"
         android:id="@+id/menu_sort"
         android:icon="@android:drawable/ic_menu_sort_by_size"/>
+    <item
+        android:id="@+id/menu_show_toast"
+        android:title="Toast"
+        android:icon="@android:drawable/ic_menu_sort_by_size"/>
 </menu>

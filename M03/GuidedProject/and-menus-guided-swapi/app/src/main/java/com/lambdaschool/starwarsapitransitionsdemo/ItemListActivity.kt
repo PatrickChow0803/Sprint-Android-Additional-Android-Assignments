@@ -52,6 +52,12 @@ class ItemListActivity : AppCompatActivity() {
         toolbar.title = title
 
         // TODO 3: get handle to drawer layout and bind to toolbar toggle
+        drawerLayout = findViewById(R.id.drawer_layout)
+        val toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar,
+                R.string.open_drawer, R.string.close_drawer)
+
+        drawerLayout?.addDrawerListener(toggle)
+        toggle.syncState()
 
         swApiObjects = ArrayList()
 
@@ -68,6 +74,22 @@ class ItemListActivity : AppCompatActivity() {
         setupRecyclerView(recyclerView as RecyclerView)
 
         // TODO 6: create a menu item selection listener and bind it to our navigation view
+        val navigationView = findViewById<NavigationView>(R.id.nav_view)
+        navigationView.setNavigationItemSelectedListener { menuItem ->
+            menuItem.isChecked = true
+            swApiObjects?.clear()
+            viewAdapter?.notifyDataSetChanged()
+            when(menuItem.itemId){
+                R.id.nav_category_people ->{getData(TYPE_PEOPLE)}
+                R.id.nav_category_planets -> {getData(TYPE_PLANETS)}
+                R.id.nav_category_starships -> {getData(TYPE_STARSHIPS)}
+            }
+
+            // Closes the drawers automatically when a user makes a selection
+            drawerLayout?.closeDrawers()
+
+            true
+        }
     }
 
     private fun setupRecyclerView(recyclerView: RecyclerView) {

@@ -71,9 +71,7 @@ object NetworkAdapter {
                 }
             }
 
-        } catch (e: MalformedURLException) {
-            e.printStackTrace()
-        } catch (e: IOException) {
+        }catch (e: IOException) {
             e.printStackTrace()
         } catch (e: Exception) {
             e.printStackTrace()
