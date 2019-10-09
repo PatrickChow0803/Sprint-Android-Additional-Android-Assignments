@@ -47,11 +47,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
 
+
+        // Move to current location. Needs location permission though.
         btn_position.setOnClickListener {
             requestPermission()
         }
+
+        // Adds a mark based off of the camera's position to the map
+        btn_pin.setOnClickListener {
+            val latLng = mMap.cameraPosition.target
+            mMap.addMarker(MarkerOptions().position(latLng).title("Your Pin"))
+        }
     }
 
+    //Request for permission for location
     fun requestPermission(){
         ActivityCompat
             .requestPermissions(this,
@@ -59,24 +68,30 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 111)
     }
 
+    // If permission is okay, move to the current location of device
     fun getCurrentLocation() {
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
             == PackageManager.PERMISSION_GRANTED) {
 
             val locationProvider = LocationServices.getFusedLocationProviderClient(this)
-            //val location: Location? = locationProvider.lastLocation.result
 
+            // Listener here because getting location takes time
             locationProvider.lastLocation.addOnSuccessListener {
                 if (it != null) {
                     val latLng = LatLng(it.latitude, it.longitude)
-                    mMap.addMarker(MarkerOptions().position(latLng).title("Your Location"))
+
+                    //Moves the camera
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
+
+                    //Places a mark on the location
+                    mMap.addMarker(MarkerOptions().position(latLng).title("Your Location"))
                 }
             }
 
         }
     }
 
+    // If request is okay, move camera to getCurrentLocation()
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
